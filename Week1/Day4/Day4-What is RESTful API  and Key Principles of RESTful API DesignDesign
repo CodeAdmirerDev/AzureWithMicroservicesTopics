@@ -70,8 +70,8 @@ namespace UserManagementAPI.Data
     {  
         private List<User> _users = new List<User>  
         {  
-            new User { Id = 1, Name = "John Doe", Email = "john@example.com" },  
-            new User { Id = 2, Name = "Jane Doe", Email = "jane@example.com" }  
+           new User { Id = 1, Name = "Suri", Email = "suri@gmail.com" },
+           new User { Id = 2, Name = "Mouni", Email = "mouni@gmail.com" }
         };  
 
         public List<User> GetAll() => _users;  
