@@ -1,0 +1,7 @@
+﻿################################################################################
+# This .gitignore file was automatically created by Microsoft(R) Visual Studio.
+################################################################################
+
+/Week1/Day4/UserManagementAPI/bin/Debug/net8.0
+/Week1/Day4/UserManagementAPI/.vs/UserManagementAPI
+/Week1/Day4/UserManagementAPI/obj
