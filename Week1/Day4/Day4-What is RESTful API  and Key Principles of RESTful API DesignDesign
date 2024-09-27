@@ -203,6 +203,17 @@ POST /api/users: Create a new user.
 PUT /api/users/{id}: Update an existing user.
 DELETE /api/users/{id}: Delete a user by ID.
 
+Project Explanation:
+
+This code demonstrates the setup for a minimal ASP.NET Core application that includes Swagger for API documentation and a simple endpoint /weatherforecast.
+The WeatherForecast is a record, providing an immutable data structure for sending weather forecast data.
+Ensure your project includes the necessary NuGet packages like Microsoft.AspNetCore.Mvc.NewtonsoftJson if you're using specific JSON serialization settings, and Swashbuckle.AspNetCore for Swagger support.
+
+To access the application:
+
+You can run this application and access the weather forecast API by navigating to https://localhost:{port}/weatherforecast in your web browser or using tools like Postman or curl.
+Swagger UI can be accessed at https://localhost:{port}/swagger when running in development mode.
+
 Summary
 
 This example demonstrates the basic structure and implementation of a RESTful API for user management in ASP.NET Core. 
