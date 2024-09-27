@@ -16,8 +16,7 @@ Learn about the principles of microservices: decentralized data management, API-
 Resource: Read the book "Building Microservices" by Sam Newman.
 
 Day 4: RESTful API Design
-Learn how to design RESTful APIs, covering HTTP methods, status codes, and resource naming conventions.
-Practice: Design a sample API for a simple service (e.g., user management).
+What is RESTful API Design?  how to implement RESTful APIs design, covering HTTP methods, status codes, and resource naming conventions and provide a Practice application to Design a sample API for a simple service (e.g., user management). using ASP.NET technology
 
 Day 5: Tools and Technologies
 Explore the common tools and frameworks used in microservices (e.g., Docker, Kubernetes, API Gateways).
