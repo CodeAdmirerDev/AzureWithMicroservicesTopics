@@ -117,28 +117,66 @@ Add Instructions to the Dockerfile:
 
 Here’s a simple example of what the Dockerfile could look like:
 
-# Use the official ASP.NET Core runtime as a base image  
-FROM mcr.microsoft.com/dotnet/aspnet:7.0 AS base  
-WORKDIR /app  
-EXPOSE 80  
+Please use below code, if your csproj and Docker files are in same directory: 
 
-# Use the SDK image to build the app  
-FROM mcr.microsoft.com/dotnet/sdk:7.0 AS build  
-WORKDIR /src  
-COPY ["MyMicroservice/MyMicroservice.csproj", "MyMicroservice/"]  
-RUN dotnet restore "MyMicroservice/MyMicroservice.csproj"  
-COPY . .  
-WORKDIR "/src/MyMicroservice"  
-RUN dotnet build "MyMicroservice.csproj" -c Release -o /app/build  
+            # Use the official ASP.NET Core runtime as a base image (Change to 8.0)
+            FROM mcr.microsoft.com/dotnet/aspnet:8.0 AS base  
+            WORKDIR /app  
+            EXPOSE 80  
+            
+            # Use the SDK image to build the app (Change to 8.0 SDK)
+            FROM mcr.microsoft.com/dotnet/sdk:8.0 AS build  
+            WORKDIR /src  
+            
+            # Since the .csproj is in the same directory as the Dockerfile, we copy it from the current directory
+            COPY ["DemoMicroserviceAppWithDocker.csproj", "./"]  
+            RUN dotnet restore "DemoMicroserviceAppWithDocker.csproj"  
+            
+            # Copy all remaining files from the current directory
+            COPY . .  
+            WORKDIR "/src"  
+            RUN dotnet build "DemoMicroserviceAppWithDocker.csproj" -c Release -o /app/build  
+            
+            # Publish the app
+            FROM build AS publish  
+            RUN dotnet publish "DemoMicroserviceAppWithDocker.csproj" -c Release -o /app/publish  
+            
+            # Create the final image
+            FROM base AS final  
+            WORKDIR /app  
+            COPY --from=publish /app/publish .  
+            ENTRYPOINT ["dotnet", "DemoMicroserviceAppWithDocker.dll"]
 
-FROM build AS publish  
-RUN dotnet publish "MyMicroservice.csproj" -c Release -o /app/publish  
 
-# Create the final image  
-FROM base AS final  
-WORKDIR /app  
-COPY --from=publish /app/publish .  
-ENTRYPOINT ["dotnet", "MyMicroservice.dll"]  
+Please use below code, if your csproj and Docker files are not in same directory: 
+
+            # Use the official ASP.NET Core runtime as a base image (for .NET 8.0)
+            FROM mcr.microsoft.com/dotnet/aspnet:8.0 AS base  
+            WORKDIR /app  
+            EXPOSE 80  
+            
+            # Use the SDK image to build the app (for .NET 8.0 SDK)
+            FROM mcr.microsoft.com/dotnet/sdk:8.0 AS build  
+            WORKDIR /src  
+            COPY ["DemoMicroserviceAppWithDocker/DemoMicroserviceAppWithDocker.csproj", "DemoMicroserviceAppWithDocker/"]  
+            RUN dotnet restore "DemoMicroserviceAppWithDocker/DemoMicroserviceAppWithDocker.csproj"  
+            
+            # Copy the remaining source code and build
+            COPY . .  
+            WORKDIR "/src/DemoMicroserviceAppWithDocker"  
+            RUN dotnet build "DemoMicroserviceAppWithDocker.csproj" -c Release -o /app/build  
+            
+            # Publish the app
+            FROM build AS publish  
+            RUN dotnet publish "DemoMicroserviceAppWithDocker.csproj" -c Release -o /app/publish  
+            
+            # Create the final runtime image
+            FROM base AS final  
+            WORKDIR /app  
+            COPY --from=publish /app/publish .  
+            ENTRYPOINT ["dotnet", "DemoMicroserviceAppWithDocker.dll"]
+
+
 
 Step 4: Build the Docker Image
 Open a Terminal:
@@ -152,6 +190,8 @@ docker build -t mymicroservice:1.0 .
 [ Note : The . at the end represents the current directory as the build context, assuming your Dockerfile is located in the current directory ]
 
 Here mymicroservice:1.0 is the name and tag of your Docker image. You can replace it with any name you prefer.
+
+
 
 Step 5: Run the Docker Container
 
