@@ -53,11 +53,32 @@ Create a new ASP.NET Core Web API project:
 dotnet new webapi -n DemoMicroserviceAppWithDocker  
 cd DemoMicroserviceAppWithDocker  
 
+Add the Controller folder and create a UsersController and required methods. 
+
+Then follow the below process:
+
+      Add the lines of code in Program.cs file :
+
+            builder.WebHost.UseUrls("http://*:80");
+            builder.Services.AddControllers();      
+            app.MapControllers();
+      
+      Add the Docker config in the launchSettings.json file:
+      
+            "Docker": {
+              "commandName": "Docker",
+              "launchBrowser": true,
+              "applicationUrl": "http://localhost:80",
+              "environmentVariables": {
+                "ASPNETCORE_ENVIRONMENT": "Development"
+              }
+            }
+
 Build and Run the Application:
 
 To ensure your application runs properly, execute:
 dotnet run  
-Access http://localhost:5000/api/values from your browser or use a tool like Postman to make sure the service is up.
+Access http://localhost:5000/api/Users from your browser or use a tool like Postman to make sure the service is up.
 
 Step 3: Create a Dockerfile
 
