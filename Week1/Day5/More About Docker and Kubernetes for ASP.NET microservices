@@ -17,9 +17,10 @@ Image Management:
 
 Image Creation: After developing and testing a microservice, you create a Docker image, which can be pushed to a container registry (like Docker Hub) for storage and distribution.
 Version Control: Each image can be versioned, allowing for rollbacks and testing different versions of the microservices.
-Kubernetes Usage in ASP.NET Microservices
-Orchestration:
 
+Kubernetes Usage in ASP.NET Microservices
+
+Orchestration:
 Purpose: Kubernetes orchestrates the deployment, scaling, and management of multiple containerized ASP.NET microservices, ensuring they run efficiently across a cluster of machines.
 Implementation: You define a Kubernetes configuration (YAML) for each microservice, specifying the desired state, including the number of replicas, resource limits, and networking settings.
 
