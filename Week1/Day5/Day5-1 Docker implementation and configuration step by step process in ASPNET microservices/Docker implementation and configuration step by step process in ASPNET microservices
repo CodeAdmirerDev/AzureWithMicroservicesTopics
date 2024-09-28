@@ -50,8 +50,8 @@ Set Up Your Project:
 Open your terminal or command prompt.
 
 Create a new ASP.NET Core Web API project:
-dotnet new webapi -n MyMicroservice  
-cd MyMicroservice  
+dotnet new webapi -n DemoMicroserviceAppWithDocker  
+cd DemoMicroserviceAppWithDocker  
 
 Build and Run the Application:
 
@@ -185,11 +185,11 @@ Ensure you are in the directory where your Dockerfile is located.
 Build the Image:
 Execute the following command to build the Docker image:
 
-docker build -t mymicroservice:1.0 .  
+docker build -t demomicroserviceappwithdocker:1.0 .  
 
 [ Note : The . at the end represents the current directory as the build context, assuming your Dockerfile is located in the current directory ]
 
-Here mymicroservice:1.0 is the name and tag of your Docker image. You can replace it with any name you prefer.
+Here demomicroserviceappwithdocker:1.0 is the name and tag of your Docker image. You can replace it with any name you prefer.
 
 
 
@@ -197,7 +197,7 @@ Step 5: Run the Docker Container
 
 Run Your Container:
 After building the image, you can run it as a container:
-docker run -d -p 8080:80 --name mymicroservice mymicroservice:1.0  
+docker run -d -p 8080:80 --name demomicroserviceappwithdocker demomicroserviceappwithdocker:1.0  
 
 This command starts a new container from the image and maps port 80 in the container to port 8080 on your host machine.
 
@@ -217,20 +217,20 @@ docker logs mymicroservice
 
 Updating Your Application:
 If you make changes to your application, you'll need to rebuild the Docker image and restart the container:
-docker build -t mymicroservice:1.0 .  
-docker stop mymicroservice  
-docker rm mymicroservice  
-docker run -d -p 8080:80 --name mymicroservice mymicroservice:1.0  
+docker build -t demomicroserviceappwithdocker:1.0 .  
+docker stop demomicroserviceappwithdocker  
+docker rm demomicroserviceappwithdocker  
+docker run -d -p 8080:80 --name demomicroserviceappwithdocker demomicroserviceappwithdocker:1.0  
 
 Step 7: Clean Up
 
 When you're done with your container, you can remove it with:
 
-docker stop mymicroservice  
-docker rm mymicroservice  
+docker stop demomicroserviceappwithdocker  
+docker rm demomicroserviceappwithdocker  
 
 To remove the image:
-docker rmi mymicroservice:1.0  
+docker rmi demomicroserviceappwithdocker:1.0  
 
 Conclusion
 Using Docker for your ASP.NET Core microservices enables you to standardize environments, improve deployment consistency, and simplify dependency management. 
