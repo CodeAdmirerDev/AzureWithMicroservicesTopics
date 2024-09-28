@@ -228,7 +228,7 @@ docker ps
 You should see your container listed.
 
 Access the API:
-Open your browser or a tool like Postman and navigate to http://localhost:8080/api/values (replace the path based on your controllers) to see your API responses.
+Open your browser or a tool like Postman and navigate to http://localhost:8080/api/Users (replace the path based on your controllers) to see your API responses.
 
 Step 6: Debugging and Updating
 
