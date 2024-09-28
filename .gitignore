@@ -12,3 +12,12 @@
 /Week1/Day5/Day5-1 Docker implementation and configuration step by step process in ASPNET microservices/DemoMicroserviceAppWithDocker/.vs
 /Week1/Day5/DockerImplementationAndConfiguration/DemoMicroserviceAppWithDocker/.vs
 /Week1/Day5/DockerImplementationAndConfiguration/DemoMicroserviceAppWithDocker/obj
+/Week1/Day5/DockerImplementationAndConfiguration/DemoMicroserviceAppWithDocker/bin/Debug/net8.0/DemoMicroserviceAppWithDocker.dll
+/Week1/Day5/DockerImplementationAndConfiguration/DemoMicroserviceAppWithDocker/bin/Debug/net8.0/DemoMicroserviceAppWithDocker.exe
+/Week1/Day5/DockerImplementationAndConfiguration/DemoMicroserviceAppWithDocker/bin/Debug/net8.0/DemoMicroserviceAppWithDocker.pdb
+/Week1/Day5/DockerImplementationAndConfiguration/DemoMicroserviceAppWithDocker/bin/Debug/net8.0/DemoMicroserviceAppWithDocker.runtimeconfig.json
+/Week1/Day5/DockerImplementationAndConfiguration/DemoMicroserviceAppWithDocker/bin/Debug/net8.0/Microsoft.AspNetCore.OpenApi.dll
+/Week1/Day5/DockerImplementationAndConfiguration/DemoMicroserviceAppWithDocker/bin/Debug/net8.0/Microsoft.OpenApi.dll
+/Week1/Day5/DockerImplementationAndConfiguration/DemoMicroserviceAppWithDocker/bin/Debug/net8.0/Swashbuckle.AspNetCore.Swagger.dll
+/Week1/Day5/DockerImplementationAndConfiguration/DemoMicroserviceAppWithDocker/bin/Debug/net8.0/Swashbuckle.AspNetCore.SwaggerGen.dll
+/Week1/Day5/DockerImplementationAndConfiguration/DemoMicroserviceAppWithDocker/bin/Debug/net8.0/Swashbuckle.AspNetCore.SwaggerUI.dll
