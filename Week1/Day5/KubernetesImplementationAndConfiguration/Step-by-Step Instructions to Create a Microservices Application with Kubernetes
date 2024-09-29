@@ -285,7 +285,7 @@ Step 4: Create Kubernetes Deployments and Services
           selector:
             app: userservice
 
-
+    
     For ProductService:
     Create a file named productservice-deployment.yaml with the following content:
 
@@ -342,7 +342,100 @@ Step 5: Deploy to Kubernetes
     
     If you're using a cloud provider or a local setup with Kubernetes LoadBalancer (e.g., Minikube), you should see an external IP for both services. 
     If you're using ClusterIP for internal access, you can use port forwarding for testing.
+    
+                    Note : If you are using local Minikube and It seems like your LoadBalancer services for both productservice and userservice are stuck in a "pending" state, which means they are waiting for an external IP to be provisioned. 
+                    This is common if you're running Kubernetes on a local environment or on a cloud provider where the load balancer configuration needs additional setup.
+                
+                    If you are using the Kubernetes on a local environment please update the yaml files :
+                
+                    userservice-deployment.yaml
+                    
+                        apiVersion: apps/v1
+                        kind: Deployment
+                        metadata:
+                          name: userservice-deployment
+                        spec:
+                          replicas: 2  # Number of pods to run
+                          selector:
+                            matchLabels:
+                              app: userservice
+                          template:
+                            metadata:
+                              labels:
+                                app: userservice
+                            spec:
+                              containers:
+                              - name: userservice
+                                image: yourusername/userservice:1.0  # Replace with your actual Docker Hub username
+                                ports:
+                                - containerPort: 80
+                        ---
+                        apiVersion: v1
+                        kind: Service
+                        metadata:
+                          name: userservice
+                        spec:
+                          type: NodePort  # Changed to NodePort
+                          ports:
+                          - port: 80
+                            targetPort: 80
+                            nodePort: 30002  # Custom NodePort (optional, in range 30000-32767)
+                          selector:
+                            app: userservice
+                
+                    productservice-deployment.yaml
+                
+                            apiVersion: apps/v1
+                        kind: Deployment
+                        metadata:
+                          name: productservice-deployment
+                        spec:
+                          replicas: 2  # Number of pods to run
+                          selector:
+                            matchLabels:
+                              app: productservice
+                          template:
+                            metadata:
+                              labels:
+                                app: productservice
+                            spec:
+                              containers:
+                              - name: productservice
+                                image: yourusername/productservice:1.0  # Replace with your actual Docker Hub username
+                                ports:
+                                - containerPort: 80
+                        ---
+                        apiVersion: v1
+                        kind: Service
+                        metadata:
+                          name: productservice
+                        spec:
+                          type: NodePort  # Changed to NodePort
+                          ports:
+                          - port: 80
+                            targetPort: 80
+                            nodePort: 30001  # Custom NodePort (optional, in range 30000-32767)
+                          selector:
+                            app: productservice
+                
+                        Changes Made:
+                        Service Type: Changed the type from LoadBalancer to NodePort so that it works in local Kubernetes environments like Minikube or Docker Desktop.
+                        NodePort: Specified custom NodePort values (30001 for ProductService and 30002 for UserService), which are optional but can be customized based on your requirements. These ports must be in the range 30000-32767.
 
+
+                        Steps to Apply:
+                        Update and Apply the YAML Files: After updating the YAML files, apply them again using:
+                        
+                        kubectl apply -f userservice-deployment.yaml
+                        kubectl apply -f productservice-deployment.yaml
+                        
+                        Access the Services: Once applied, you can access the services at:
+                        UserService: http://<NodeIP>:30002
+                        ProductService: http://<NodeIP>:30001
+                        
+                        To get your NodeIP, use:
+                        kubectl get nodes -o wide
+                        This setup should work well for local development environments like Minikube or Docker Desktop.
 
 Step 6: Access the Microservices
 To expose your services externally, change the service type to NodePort or use kubectl port-forward.
