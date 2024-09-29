@@ -19,8 +19,14 @@ Step-by-Step Instructions to Create a Microservices Application with Kubernetes
     brew install minikube  
     
     # On Windows (using Chocolatey):  
-    choco install minikube  
-    
+    choco install minikube 
+
+    If you are not installed the Chocolatey in windows please follow the below steps:
+        To install it on locally use the Windows Powershell and run as adminisartor then execute the following script :
+        Set-ExecutionPolicy Bypass -Scope Process -Force; [System.Net.ServicePointManager]::SecurityProtocol = [System.Net.ServicePointManager]::SecurityProtocol -bor 3072; iex ((New-Object System.Net.WebClient).DownloadString('https://community.chocolatey.org/install.ps1'))
+        To verify the insatllation :
+        Type choco in cmd and if you see the version info then the intalation is completed sucessfully.
+
     # On Linux via apt:  
     curl -LO https://storage.googleapis.com/minikube/releases/latest/minikube-linux-amd64  
     sudo install minikube-linux-amd64 /usr/local/bin/minikube  
@@ -53,10 +59,8 @@ Create User Service
     dotnet new webapi -n UserService  
     cd UserService  
 
-    Modify the WeatherForecastController to serve users:
+    Add the Controllers folder and create the UsersController and replace the content with the following code:
     
-    Replace the contents of Controllers/WeatherForecastController.cs with the following code:
-
     using Microsoft.AspNetCore.Mvc;  
     namespace UserService.Controllers  
     {  
@@ -69,13 +73,19 @@ Create User Service
             {  
                 var users = new[]  
                 {  
-                    new { Id = 1, Name = "John Doe" },  
-                    new { Id = 2, Name = "Jane Doe" }  
+                    new { Id = 1, Name = "Suri" },  
+                    new { Id = 2, Name = "Mouni" }  
                 };  
                 return Ok(users);  
             }  
         }  
     }  
+
+    Add the lines of code in Program.cs file :
+
+            builder.Services.AddControllers();      
+            app.MapControllers();
+
     Remove unnecessary files: Since we're creating a simple service, you can delete WeatherForecast.cs and the WeatherForecast class.
     
     Update launchSettings.json (optional): To set the port from which the service will run locally, locate Properties/launchSettings.json and set:
@@ -99,10 +109,9 @@ Create Product Service
       dotnet new webapi -n ProductService  
       cd ProductService  
       
-      Modify the WeatherForecastController to serve products:
+      Add the Controllers folder and create the ProductsController and replace the content with the following code:
       
-      Replace the contents of Controllers/WeatherForecastController.cs with the following code:
-
+  
       using Microsoft.AspNetCore.Mvc;  
       namespace ProductService.Controllers  
       {  
@@ -115,13 +124,36 @@ Create Product Service
               {  
                   var products = new[]  
                   {  
-                      new { Id = 1, Name = "Product A" },  
-                      new { Id = 2, Name = "Product B" }  
+                      new { Id = 1, Name = "Dell Laptop" },  
+                      new { Id = 2, Name = "Oneplus SmartPhone" }  
                   };  
                   return Ok(products);  
               }  
           }  
       }  
+    
+        Add the lines of code in Program.cs file :
+
+            builder.Services.AddControllers();      
+            app.MapControllers();
+
+    Remove unnecessary files: Since we're creating a simple service, you can delete WeatherForecast.cs and the WeatherForecast class.
+    
+    Update launchSettings.json (optional): To set the port from which the service will run locally, locate Properties/launchSettings.json and set:
+    
+    "profiles": {  
+        "ProductService": {  
+            "commandName": "Project",  
+            "launchBrowser": true,  
+            "applicationUrl": "http://localhost:5000",  
+            "environmentVariables": {  
+                "ASPNETCORE_ENVIRONMENT": "Development"  
+            }  
+        },  
+        ...  
+    }  
+
+
 
 Step 2: Containerize the Microservices
 
