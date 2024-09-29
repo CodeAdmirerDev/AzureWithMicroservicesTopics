@@ -19,8 +19,14 @@ Step-by-Step Instructions to Create a Microservices Application with Kubernetes
     brew install minikube  
     
     # On Windows (using Chocolatey):  
-    choco install minikube  
-    
+    choco install minikube 
+
+    If you are not installed the Chocolatey in windows please follow the below steps:
+        To install it on locally use the Windows Powershell and run as adminisartor then execute the following script :
+        Set-ExecutionPolicy Bypass -Scope Process -Force; [System.Net.ServicePointManager]::SecurityProtocol = [System.Net.ServicePointManager]::SecurityProtocol -bor 3072; iex ((New-Object System.Net.WebClient).DownloadString('https://community.chocolatey.org/install.ps1'))
+        To verify the insatllation :
+        Type choco in cmd and if you see the version info then the intalation is completed sucessfully.
+
     # On Linux via apt:  
     curl -LO https://storage.googleapis.com/minikube/releases/latest/minikube-linux-amd64  
     sudo install minikube-linux-amd64 /usr/local/bin/minikube  
