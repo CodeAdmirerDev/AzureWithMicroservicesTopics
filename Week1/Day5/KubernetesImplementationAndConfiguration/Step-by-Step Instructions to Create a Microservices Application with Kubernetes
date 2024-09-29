@@ -157,10 +157,10 @@ Create Product Service
 
 Step 2: Containerize the Microservices
 
-Create Dockerfiles
-
-User Service Dockerfile:
-Create a file named Dockerfile in the UserService directory:
+    Create Dockerfiles
+    
+    User Service Dockerfile:
+    Create a file named Dockerfile in the UserService directory:
 
         # Use the official ASP.NET Core Runtime as the base image  
         FROM mcr.microsoft.com/dotnet/aspnet:8.0 AS base  
@@ -187,9 +187,9 @@ Create a file named Dockerfile in the UserService directory:
         ENTRYPOINT ["dotnet", "UserService.dll"]  
 
 
-Product Service Dockerfile:
-
-Create a file named Dockerfile in the ProductService directory:
+    Product Service Dockerfile:
+    
+    Create a file named Dockerfile in the ProductService directory:
 
         # Use the official ASP.NET Core Runtime as the base image  
         FROM mcr.microsoft.com/dotnet/aspnet:8.0 AS base  
@@ -217,17 +217,22 @@ Create a file named Dockerfile in the ProductService directory:
 
 
 
-Build Docker Images
-From the root directory that contains both UserService and ProductService, run:
+    Build Docker Images
+    From the root directory that contains both UserService and ProductService, run:
 
-        # Build User Service Docker Image  
-        cd UserService  
-        docker build -t yourusername/userservice:1.0 .  
+        Build User Service Docker Image :
+
+        Open the UserService project root folder and execute the below command :
+        docker build -t yourusername/userservice:1.0 .  ==> Replace with your docker name  
         
-        # Build Product Service Docker Image  
-        cd ../ProductService  
-        docker build -t yourusername/productservice:1.0 .  
-        Step 3: Push Images to Container Registry
+        Build Product Service Docker Image :
+
+        Open the ProductService project root folder and execute the below command :
+
+        docker build -t yourusername/productservice:1.0 .  ==> Replace with your docker name 
+
+Step 3: Push Images to Container Registry
+        
         Push the images to Docker Hub or your preferred container registry:
         
         # Login to Docker Hub  
@@ -239,83 +244,105 @@ From the root directory that contains both UserService and ProductService, run:
 
 Step 4: Create Kubernetes Deployments and Services
 
-User Service YAML
-        
-        Create user-service.yaml:
-        
-        apiVersion: apps/v1  
-        kind: Deployment  
-        metadata:  
-          name: user-service  
-        spec:  
-          replicas: 3  
-          selector:  
-            matchLabels:  
-              app: user-service  
-          template:  
-            metadata:  
-              labels:  
-                app: user-service  
-            spec:  
-              containers:  
-              - name: user-service  
-                image: yourusername/userservice:1.0  
-                ports:  
-                - containerPort: 80  
-        ---  
-        apiVersion: v1  
-        kind: Service  
-        metadata:  
-          name: user-service  
-        spec:  
-          type: ClusterIP  
-          selector:  
-            app: user-service  
-          ports:  
-          - port: 80  
-            targetPort: 80  
+    Once you've built and pushed your Docker images (UserService and ProductService), the next step is to deploy these services on a Kubernetes cluster. 
+    You will need to create Kubernetes Deployment and Service YAML configuration files for each of the services.
+    
+    Below is a guide on how to create and apply these configurations for both services.
+   
+    1. Create Deployment and Service YAML Files
+    For UserService:
+    Create a file named userservice-deployment.yaml with the following content: (Place this file in the root folder of UserService application)
 
-Product Service YAML
-        Create product-service.yaml:
-        
-        apiVersion: apps/v1  
-        kind: Deployment  
-        metadata:  
-          name: product-service  
-        spec:  
-          replicas: 3  
-          selector:  
-            matchLabels:  
-              app: product-service  
-          template:  
-            metadata:  
-              labels:  
-                app: product-service  
-            spec:  
-              containers:  
-              - name: product-service  
-                image: yourusername/productservice:1.0  
-                ports:  
-                - containerPort: 80  
-        ---  
-        apiVersion: v1  
-        kind: Service  
-        metadata:  
-          name: product-service  
-        spec:  
-          type: ClusterIP  
-          selector:  
-            app: product-service  
-          ports:  
-          - port: 80  
-            targetPort: 80  
+            apiVersion: apps/v1
+        kind: Deployment
+        metadata:
+          name: userservice-deployment
+        spec:
+          replicas: 2  # Number of pods to run
+          selector:
+            matchLabels:
+              app: userservice
+          template:
+            metadata:
+              labels:
+                app: userservice
+            spec:
+              containers:
+              - name: userservice
+                image: yourusername/userservice:1.0  # Replace with your actual Docker Hub username
+                ports:
+                - containerPort: 80
+        ---
+        apiVersion: v1
+        kind: Service
+        metadata:
+          name: userservice
+        spec:
+          type: LoadBalancer  # Use ClusterIP for internal-only access
+          ports:
+          - port: 80
+            targetPort: 80
+          selector:
+            app: userservice
+
+
+    For ProductService:
+    Create a file named productservice-deployment.yaml with the following content:
+
+            apiVersion: apps/v1
+        kind: Deployment
+        metadata:
+          name: productservice-deployment
+        spec:
+          replicas: 2  # Number of pods to run
+          selector:
+            matchLabels:
+              app: productservice
+          template:
+            metadata:
+              labels:
+                app: productservice
+            spec:
+              containers:
+              - name: productservice
+                image: yourusername/productservice:1.0  # Replace with your actual Docker Hub username
+                ports:
+                - containerPort: 80
+        ---
+        apiVersion: v1
+        kind: Service
+        metadata:
+          name: productservice
+        spec:
+          type: LoadBalancer  # Use ClusterIP for internal-only access
+          ports:
+          - port: 80
+            targetPort: 80
+          selector:
+            app: productservice
 
 Step 5: Deploy to Kubernetes
 
-      Apply the YAML files to your Kubernetes cluster:
-      
-      kubectl apply -f user-service.yaml  
-      kubectl apply -f product-service.yaml  
+    Apply the Kubernetes Configurations
+    Once you have created the YAML files, you can deploy the services to your Kubernetes cluster using the following commands:
+
+    Deploy UserService:
+    kubectl apply -f userservice-deployment.yaml
+
+    Deploy ProductService:
+    kubectl apply -f productservice-deployment.yaml
+
+    Verify the Deployments and Services:
+
+    Check the status of the Deployments:
+    kubectl get deployments
+
+    Check the status of the Services:
+    kubectl get services
+    
+    If you're using a cloud provider or a local setup with Kubernetes LoadBalancer (e.g., Minikube), you should see an external IP for both services. 
+    If you're using ClusterIP for internal access, you can use port forwarding for testing.
+
 
 Step 6: Access the Microservices
 To expose your services externally, change the service type to NodePort or use kubectl port-forward.
