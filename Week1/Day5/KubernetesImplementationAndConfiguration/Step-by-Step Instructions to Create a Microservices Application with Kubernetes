@@ -326,21 +326,71 @@ Step 5: Deploy to Kubernetes
     Apply the Kubernetes Configurations
     Once you have created the YAML files, you can deploy the services to your Kubernetes cluster using the following commands:
 
-    Deploy UserService:
-    kubectl apply -f userservice-deployment.yaml
+    Steps to Deploy Kubernetes Applications
+    Ensure Kubernetes Cluster is Running: Make sure your Kubernetes cluster is up and running. If you’re using Minikube, you can start it with:
 
-    Deploy ProductService:
-    kubectl apply -f productservice-deployment.yaml
+    minikube start
 
-    Verify the Deployments and Services:
+    If using Docker Desktop, ensure Kubernetes is enabled in the settings.
 
-    Check the status of the Deployments:
-    kubectl get deployments
+    Login to Docker Hub (if necessary): If your images are private, ensure you’re logged in to Docker Hub:
 
-    Check the status of the Services:
-    kubectl get services
+    docker login
+
+    Build Docker Images: Navigate to the root directories of your UserService and ProductService, and build the Docker images if you haven't done so already:
+
+        For UserService:
+        docker build -t codeadmirer/userservice:1.0 .
+
+        For ProductService :
+        docker build -t codeadmirer/productservice:1.0 .
+
+    Push Docker Images to Docker Hub: After building the images, push them to Docker Hub:
+
+
+        For UserService:
+        docker push codeadmirer/userservice:1.0
+        
+        For ProductService :
+        docker push codeadmirer/productservice:1.0
+
+    Apply Kubernetes Deployment and Service YAML Files: Apply the deployment and service configurations to your Kubernetes cluster:
+
+        For UserService :
+        kubectl apply -f userservice-deployment.yaml
+        
+        For ProductService:
+        kubectl apply -f productservice-deployment.yaml
+
+    Check the Status of Deployments: Verify that the deployments have been created and are functioning correctly:
+        kubectl get deployments
     
+    Check the Status of Pods: Ensure that the pods are in the Running state:
+        kubectl get pods
+
+    Check the Status of Services: Confirm that your services are running and have the correct NodePort assigned:
+        kubectl get services
+
+    Access Your Services: Use the NodePort to access your services from a web browser or a tool like Postman. First, retrieve the Node IP:
+        kubectl get nodes -o wide
+
+    Then access the services using the following URLs:
+        For UserService: http://<NodeIP>:30002
+        For ProductService: http://<NodeIP>:30001
+
+    Troubleshooting (if necessary): If the pods are not running or are in a CrashLoopBackOff or ImagePullBackOff state:
+
+        Describe the pods for more information:
+        
+        kubectl describe pod <pod-name>
+        Check the logs for any runtime errors:
+
+        kubectl logs <pod-name>
+        By following these steps in order, you should be able to successfully deploy your UserService and ProductService to your Kubernetes cluster and access them. 
+
+
     If you're using a cloud provider or a local setup with Kubernetes LoadBalancer (e.g., Minikube), you should see an external IP for both services. 
+=======================================================================================================================================================
     If you're using ClusterIP for internal access, you can use port forwarding for testing.
     
                     Note : If you are using local Minikube and It seems like your LoadBalancer services for both productservice and userservice are stuck in a "pending" state, which means they are waiting for an external IP to be provisioned. 
