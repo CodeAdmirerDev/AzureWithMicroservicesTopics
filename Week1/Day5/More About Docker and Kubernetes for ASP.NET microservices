@@ -39,26 +39,30 @@ Canary Deployments: You can deploy new versions of a microservice to a small sub
 Resource Management:
 Resource Limits: Kubernetes enables you to set resource requests and limits for each microservice, ensuring optimal resource utilization across the cluster.
 
-Summary of Differences in Usage: 
--------------------------------------------------------------------------------------------------------------------------------------
-| Aspect	              |      Docker in ASP.NET Microservices	        |         Kubernetes in ASP.NET Microservices                |
--------------------------------------------------------------------------------------------------------------------------------------
-| Purpose	              | Containerization of individual microservices	|    Orchestration of multiple microservices across clusters |
--------------------------------------------------------------------------------------------------------------------------------------
-| Environment	          | Local development and single-host deployment	|    Production-grade deployment across multiple hosts       |
--------------------------------------------------------------------------------------------------------------------------------------
-| Scaling	              | Manual scaling of containers	                |    Automatic scaling and load balancing                    |
--------------------------------------------------------------------------------------------------------------------------------------
-| Management            |	Manages individual container lifecycle	      |    Manages the entire lifecycle of microservices           |
--------------------------------------------------------------------------------------------------------------------------------------
-| Service Discovery     |	Basic networking between containers	          |    Advanced service discovery and communication            |
--------------------------------------------------------------------------------------------------------------------------------------
-| Deployment Strategies |	Simple deployments using Docker images	      |    Rolling updates, canary deployments, and more           |
--------------------------------------------------------------------------------------------------------------------------------------
-| Fault Tolerance      	| Basic restart capabilities	                  |    Automated recovery and self-healing                     |
--------------------------------------------------------------------------------------------------------------------------------------
-| Resource Management   |	Limited to container resource settings	      |    Comprehensive resource allocation and management        |
--------------------------------------------------------------------------------------------------------------------------------------
+Differences in Usage Between Docker and Kubernetes in ASP.NET Microservices
+
+Docker in ASP.NET Microservices
+    Purpose: Containerization of individual microservices.
+    Environment: Primarily for local development and single-host deployment.
+    Scaling: Manual scaling of containers is required.
+    Management: Manages the lifecycle of individual containers.
+    Service Discovery: Basic networking between containers.
+    Deployment Strategies: Simple deployments using Docker images.
+    Fault Tolerance: Limited to basic restart capabilities.
+    Resource Management: Limited to container resource settings.
+
+Kubernetes in ASP.NET Microservices
+
+    Purpose: Orchestration of multiple microservices across clusters.
+    Environment: Suitable for production-grade deployment across multiple hosts.
+    Scaling: Automatic scaling and load balancing capabilities.
+    Management: Manages the entire lifecycle of microservices.
+    Service Discovery: Advanced service discovery and communication functionalities.
+    Deployment Strategies: Supports rolling updates, canary deployments, and more.
+    Fault Tolerance: Features automated recovery and self-healing mechanisms.
+    Resource Management: Comprehensive resource allocation and management across the infrastructure.
+
+This point-wise comparison highlights the key differences between Docker and Kubernetes in the context of ASP.NET microservices, helping developers understand where each tool excels
 
 Conclusion
 ==========
